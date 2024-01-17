@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <form id="tripForm" onsubmit="validateForm()">
+      <div class="">
+        <h1>Add Trip</h1>
+      </div>
+      <label for="tripTitle">Trip Title:</label>
+      <input type="text" id="tripTitle" required placeholder="Enter Title" />
+
+      <label for="tripImage">Trip Image:</label>
+      <input type="file" id="tripImage" accept="image/*" required />
+      <label for="tripType">Trip Type:</label>
+      <select id="tripType" multiple required onchange="handleTripTypeChange()">
+        <optgroup label="Day Tours">
+          <option value="CairoDayTours">Cairo day tours</option>
+          <option value="GizaDayTours">Giza day tours</option>
+          <option value="AlexandriaDayTours">Alexandria day tours</option>
+          <option value="LuxorDayTours">Luxor day tours</option>
+          <option value="AswanDayTours">Aswan day tours</option>
+          <option value="HurghadaDayTours">Hurghada day tours</option>
+          <option value="SharmElSheikhDayTours">
+            Sharm El Sheikh day tours
+          </option>
+          <option value="DahabDayTours">Dahab day tours</option>
+        </optgroup>
+        <hr />
+        <optgroup label="Tour Packages">
+          <option value="StandardFourPackages">Standard Four Packages</option>
+          <option value="luXuryT.P">luXury T.P</option>
+          <option value="AirportTransfers">Diamond T.P.s</option>
+          <option value="ShoreExcursion">Budget. T.P</option>
+          <option value="HoneyMoonT.P">Honey moon T.P</option>
+          <option value="FamilyT.P">Family. T.P</option>
+          <option value="SoloTourPackages">Solo tour Packages.</option>
+        </optgroup>
+        <hr />
+        <option value="nileCruise" class="text_bold">Nile Cruise</option>
+        <hr />
+        <optgroup label="Airport Transfers">
+          <option value="CairoAirportTransfers">Cairo Airport Transfers</option>
+          <option value="AlexandriaAirportTransfers">
+            Alexandria Airport Transfers
+          </option>
+          <option value="SphinxAirportTransfers">
+            Sphinx Airport Transfers
+          </option>
+          <option value="BorgElArabAirportTransfers">
+            Borg El Arab Airport Transfers
+          </option>
+          <option value="AswanAirportTransfers">Aswan Airport Transfers</option>
+          <option value="LuxorAirportTransfers">Luxor Airport Transfers</option>
+          <option value="SharmElSheikhAirportTransfers">
+            Sharm El Sheikh Airport Transfers
+          </option>
+          <option value="Hurghada Airport Transfers">
+            Hurghada Airport Transfers
+          </option>
+        </optgroup>
+        <hr />
+        <optgroup label="Shore Excursions">
+          <option value="ToursFromAlexandria">Tours from Alexandria</option>
+          <option value="ToursFromPortSaid">Tours from Port said</option>
+          <option value="ToursFromAinElSokhna">Tours from Ain El Sokhna</option>
+          <option value="ToursFromSafagaPort">Tours from Safaga port</option>
+        </optgroup>
+        <hr />
+        <optgroup label="Shore Excursions">
+          <option value="ToursFromAlexandria">Tours from Alexandria</option>
+          <option value="ToursFromPortSaid">Tours from Port said</option>
+          <option value="ToursFromAinElSokhna">Tours from Ain El Sokhna</option>
+          <option value="ToursFromSafagaPort">Tours from Safaga port</option>
+        </optgroup>
+      </select>
+      <label for="tripDestination">Trip Destination:</label>
+      <select id="tripDestination" required multiple>
+        <option value="cairo">Cairo</option>
+        <option value="giza">Giza</option>
+        <option value="alexandria">Alexandria</option>
+        <option value="luxor">Luxor</option>
+        <option value="aswan">Aswan</option>
+        <option value="hurghada">Hurghada</option>
+        <option value="alexandria">Sharm EL-SheiKh</option>
+        <option value="alexandria">Dahab</option>
+      </select>
+
+      <label for="tripDuration">Trip Duration (in days or hours):</label>
+      <input
+        type="number"
+        id="tripDuration"
+        min="1"
+        required
+        placeholder="Enter duration in days"
+      />
+      <input
+        type="number"
+        id="tripDurationHour"
+        class="d_none"
+        min="1"
+        required
+        placeholder="Enter duration in hours"
+      />
+      <span id="durationUnit">days</span>
+
+      <label for="itinerary">Itinerary:</label>
+      <div id="itineraryContainer"></div>
+
+      <button
+        type="button"
+        onclick="generateItineraryFields('itineraryContainer')"
+      >
+        Generate Itinerary Fields
+      </button>
+
+      <label for="tripOverview">Trip Overview:</label>
+      <textarea id="tripOverview" rows="4" required></textarea>
+      <label for="tripHighlights">Trip Highlights:</label>
+      <div id="tripHighlightsContainer">
+        <input type="text" placeholder="Trip Highlights" />
+        <button type="button" onclick="addInput('tripHighlightsContainer')">
+          Add
+        </button>
+      </div>
+      <label for="tripCostInclude">Cost (Include):</label>
+      <div id="tripCostIncludeContainer">
+        <input type="text" placeholder="cost Include" />
+        <button type="button" onclick="addInput('tripCostIncludeContainer')">
+          Add
+        </button>
+      </div>
+      <label for="tripCostExclude">Cost (Exclude):</label>
+      <div id="tripCostExcludeContainer">
+        <input type="text" placeholder="cost Exclude" />
+        <button type="button" onclick="addInput('tripCostExcludeContainer')">
+          Add
+        </button>
+      </div>
+
+      <label for="pricePackage">Price Package:</label>
+      <div id="pricePackageOptions" class="price_package_option">
+        <label>
+          <input
+            type="checkbox"
+            name="pricePackage"
+            value="standard"
+            onchange="handlePricePackageChange()"
+          />
+          Standard Package
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="pricePackage"
+            value="luxury"
+            onchange="handlePricePackageChange()"
+          />
+          Luxury Package
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="pricePackage"
+            value="demand"
+            onchange="handlePricePackageChange()"
+          />
+          Demand Package
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            name="pricePackage"
+            value="DayTourPackage"
+            onchange="handlePricePackageChange()"
+          />
+          Day Tour Package
+        </label>
+      </div>
+
+      <div id="priceOptionsContainer" class="price_package_option"></div>
+      <label for="priceOptions">Price Options:</label>
+      <div id="optionsContainer"></div>
+      <button type="button" onclick="addOption()">Add Option</button>
+      <button type="submit" id="submit">Submit</button>
+    </form>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        addDoc,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyAaG20u7rCHgLmJ2kqGgaiMn654bHX5wrI",
+
+        authDomain: "trips-a402e.firebaseapp.com",
+
+        projectId: "trips-a402e",
+
+        storageBucket: "trips-a402e.appspot.com",
+
+        messagingSenderId: "505086121898",
+
+        appId: "1:505086121898:web:0d73b01b7f4af375993dd3",
+      };
+
+      const submitBtn = document.getElementById("submit");
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      console.log(db);
+      console.log("ssfk", submitBtn);
+      submitBtn.addEventListener("click", () => {
+        validateForm();
+      });
+
+      async function validateForm() {
+        const tripTitle = document.getElementById("tripTitle").value;
+
+        const tripImage = document.getElementById("tripImage").value;
+
+        const tripType = Array.from(
+          document.getElementById("tripType").selectedOptions
+        ).map((option) => option.value);
+        const tripDestination = Array.from(
+          document.getElementById("tripDestination").selectedOptions
+        ).map((options) => options.value);
+        const tripDuration = document.getElementById("tripDuration").value;
+        const tripDurationHour = document.getElementById("tripDurationHour")
+          .value;
+        const tripOverview = document.getElementById("tripOverview").value;
+        const tripDurationDays = console.log(tripDuration);
+        const tripHighlights = Array.from(
+          document
+            .getElementById("tripHighlightsContainer")
+            .getElementsByTagName("input")
+        ).map((input) => input.value);
+        const tripCostInclude = Array.from(
+          document
+            .getElementById("tripCostIncludeContainer")
+            .getElementsByTagName("input")
+        ).map((input) => input.value);
+        const tripCostExclude = Array.from(
+          document
+            .getElementById("tripCostExcludeContainer")
+            .getElementsByTagName("input")
+        ).map((input) => input.value);
+        const pricePackagesData = [];
+        const selectedPackages = document.querySelectorAll(
+          'input[name="pricePackage"]:checked'
+        );
+        selectedPackages.forEach((packageItem) => {
+          const packageData = { type: packageItem.value, options: [] };
+
+          if (packageItem.value === "DayTourPackage") {
+            const dayTourOptions = document.querySelectorAll(
+              'input[name^="dayTourPriceInput"]'
+            );
+            dayTourOptions.forEach((option) => {
+              packageData.options.push({
+                text: option.parentNode.textContent.trim(),
+                price: option.value,
+              });
+            });
+          } else {
+            for (let i = 0; i < 4; i++) {
+              const priceInput = document.querySelector(
+                `input[name="${packageItem.value}PriceInput_${i}"]`
+              );
+              packageData.options.push({
+                text: `Enter Price ${i + 1}`,
+                price: priceInput.value,
+              });
+            }
+          }
+
+          pricePackagesData.push(packageData);
+        });
+
+        console.log(pricePackagesData);
+        const priceOptionsContainer = document.getElementById(
+          "optionsContainer"
+        );
+        const priceOptions = [];
+        priceOptionsContainer
+          .querySelectorAll(".option-container")
+          .forEach((optionContainer) => {
+            const textInput = optionContainer.querySelector(
+              'input[type="text"]'
+            );
+            const priceInput = optionContainer.querySelector(
+              'input[type="number"]'
+            );
+            const textValue = textInput ? textInput.value : "";
+            const priceValue = priceInput ? priceInput.value : "";
+            if (textValue.trim() !== "" || priceValue.trim() !== "") {
+              priceOptions.push({ text: textValue, price: priceValue });
+            }
+          });
+        const itineraryContainer = document.getElementById(
+          "itineraryContainer"
+        );
+        const itineraryData = [];
+        const inputs = itineraryContainer.getElementsByTagName("input");
+
+        for (let i = 0; i < inputs.length; i++) {
+          const title = inputs[i].value;
+          const description = inputs[i + 1].value;
+          itineraryData.push({ title, description });
+          i++;
+        }
+        const uniqueTripTypes = Array.from(new Set(tripType));
+  const uniqueTripDestinations = Array.from(new Set(tripDestination));
+        try {
+          const docRef = await addDoc(collection(db, "trips"), {
+            tripTitle: tripTitle,
+            image: tripImage,
+            type: uniqueTripTypes,
+            destination: uniqueTripDestinations,
+            duration: tripDuration,
+            overview: tripOverview,
+            highlights: tripHighlights,
+            costInclude: tripCostInclude,
+            costExclude: tripCostExclude,
+            pricePackages: pricePackagesData,
+            priceOptions: priceOptions,
+            itinerary: itineraryData,
+          });
+          console.log(" ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+        alert("Form submitted");
+          document.getElementById("tripForm").reset();
+      }
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>
